@@ -1,0 +1,30 @@
+const handleCommentSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:1234/posts/comment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          content: newComment,
+          postId: id
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to post comment');
+      }
+      const commentData = await response.json();
+      setComments([commentData, ...comments]);
+      setNewComment('');
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
+  };
+
+  if (!post) {
+    return <Typography>Loading...</Typography>
+  }
+  const handlePrev = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : post.images.length - 1));
+  };
